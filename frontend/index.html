@@ -745,7 +745,10 @@
                     <p>Your guess was:</p>
                     <p class="end-guess-display" id="end-player-guess"></p>
                 </div>
-                <button id="next-round-btn">Next Round</button>
+                <div class="button-row">
+                    <button id="next-round-btn">Next Round</button>
+                    <button id="override-btn" class="secondary" style="display: none;">Override as Correct</button>
+                </div>
             </div>
             
             <!-- Screen: Game Over -->
@@ -832,6 +835,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('input[name="word-source"]').forEach(radio => {
         radio.addEventListener('change', toggleThemeInput);
     });
+
+    // Add override event listener
+    document.getElementById('override-btn').addEventListener('click', overrideGuess);
 
     // --- GAME LOGIC ---
 
@@ -1181,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function processGuess(isPass, wasForcedPass = false) {
         const guess = ui.playerGuessInput.value.trim();
         let correct = false;
+        let wasOverridden = false;
 
         ui.endSecretWord.textContent = state.currentWord;
         
@@ -1188,6 +1195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ui.resultMessage.textContent = wasForcedPass ? "No Valid Clues!" : "You chose to pass.";
             ui.resultMessage.className = 'result-message pass';
             ui.endPlayerGuess.textContent = '---';
+            document.getElementById('override-btn').style.display = 'none';
         } else {
             correct = isCloseEnough(guess, state.currentWord);
             if (correct) {
@@ -1199,12 +1207,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     ui.resultMessage.textContent = "Close enough!";
                 }
                 ui.resultMessage.className = 'result-message correct';
+                document.getElementById('override-btn').style.display = 'none';
             } else {
                 ui.resultMessage.textContent = "Incorrect!";
                 ui.resultMessage.className = 'result-message incorrect';
+                // Show override button for incorrect guesses
+                document.getElementById('override-btn').style.display = 'inline-flex';
             }
             ui.endPlayerGuess.textContent = `"${guess}"`;
         }
+
+        // Store current round data for potential override
+        state.currentRoundData = {
+            guess: guess,
+            isPass: isPass,
+            wasForcedPass: wasForcedPass,
+            wasCorrect: correct,
+            wasOverridden: false
+        };
 
         updateStats();
         
@@ -1217,17 +1237,43 @@ document.addEventListener('DOMContentLoaded', () => {
         switchScreen('roundEnd');
     }
 
-    function showGameOver() {
-        ui.finalScore.textContent = state.score;
-        let rating = "You're getting the hang of it!";
-        if(state.score >= 13) rating = "Perfect Score! You are true masters of the game!";
-        else if (state.score >= 11) rating = "Excellent! A truly memorable performance.";
-        else if (state.score >= 8) rating = "Great job! A very respectable score.";
-        else if (state.score >= 5) rating = "Not bad! A good first attempt.";
-        ui.finalRating.textContent = rating;
-        
-        switchScreen('gameOver');
+    function overrideGuess() {
+        if (state.currentRoundData && !state.currentRoundData.wasCorrect && !state.currentRoundData.wasOverridden) {
+            // Award the point
+            state.score++;
+            state.currentRoundData.wasOverridden = true;
+            
+            // Update the UI
+            ui.resultMessage.textContent = "Overridden as Correct!";
+            ui.resultMessage.className = 'result-message correct';
+            
+            // Hide the override button
+            document.getElementById('override-btn').style.display = 'none';
+            
+            // Update stats display
+            updateStats();
+            
+            // Add a small visual feedback
+            const overrideMsg = document.createElement('p');
+            overrideMsg.textContent = 'Players judged this guess as acceptable.';
+            overrideMsg.style.fontStyle = 'italic';
+            overrideMsg.style.color = 'var(--text-secondary)';
+            overrideMsg.style.marginTop = 'var(--space-4)';
+            overrideMsg.style.fontSize = 'var(--text-base)';
+            
+            const card = document.querySelector('#round-end-screen .card');
+            card.appendChild(overrideMsg);
+            
+            // Remove the message after moving to next round
+            setTimeout(() => {
+                if (overrideMsg.parentNode) {
+                    overrideMsg.remove();
+                }
+            }, 100);
+        }
     }
+
+    // ...existing code...
 });
 </script>
 
