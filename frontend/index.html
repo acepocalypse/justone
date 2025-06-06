@@ -937,11 +937,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             themeSection.style.display = 'none';
         }
-    }
-
-    async function generateCustomWords(theme) {
+    }    async function generateCustomWords(theme) {
         try {
-            const response = await fetch('http://localhost:8000/generate-words', {
+            const response = await fetch('http://localhost:8080/generate-words', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
