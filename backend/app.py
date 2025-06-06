@@ -65,12 +65,12 @@ async def generate_words(request: ThemeRequest):
         # Call the Gemini API
         response = client.models.generate_content(
             model="gemini-2.0-flash",
-            prompt=prompt,
+            contents=prompt,
         )
         
         # --- Parse and Clean the Response ---
         # Clean up the text: remove newlines, asterisks, etc.
-        raw_text = response.text.strip().replace('\n', ',').replace('*', '')
+        raw_text = response.candidates[0].content.parts[0].text.strip().replace('\n', ',').replace('*', '')
         
         # Split into a list and clean each word
         # This regex split handles cases with or without spaces after commas
