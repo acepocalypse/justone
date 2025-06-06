@@ -124,14 +124,15 @@
         }
 
         header {
-            background: var(--warm-gradient);
-            color: var(--white);
+            background: linear-gradient(135deg, #F0F0F0 0%, #E8E4DA 100%);
+            color: var(--text-primary);
             padding: var(--space-6) var(--space-8);
             text-align: center;
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-            border-bottom: 4px solid var(--secondary-orange);
+            border-bottom: 4px solid #D1D5DB;
+            border-top: 1px solid #E5E7EB;
         }
 
         header h1 {
@@ -143,6 +144,15 @@
             z-index: 1;
             letter-spacing: 1px;
         }
+
+        header img {
+            max-height: 100px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-bottom: var(--space-2);
+            position: relative;
+            z-index: 1;
+        }
         
         .game-stats {
             display: flex;
@@ -151,7 +161,7 @@
             font-size: var(--text-lg);
             position: relative;
             z-index: 1;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-shadow: none;
         }
 
         main {
@@ -600,6 +610,11 @@
                 margin-bottom: var(--space-2);
             }
 
+            header img {
+                max-height: 80px;
+                margin-bottom: var(--space-2);
+            }
+
             .game-stats {
                 font-size: var(--text-base);
             }
@@ -717,6 +732,11 @@
                 margin-bottom: var(--space-1);
             }
 
+            header img {
+                max-height: 65px;
+                margin-bottom: var(--space-1);
+            }
+
             .game-stats {
                 font-size: var(--text-sm);
             }
@@ -764,11 +784,14 @@
             }
 
             .button-row {
-                gap: var(--space-3);
-                margin-top: var(--space-4);
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-4);
+                margin-top: var(--space-5);
             }
 
             .button-row button {
+                width: 100%;
                 max-width: 240px;
             }
 
@@ -830,6 +853,92 @@
             header {
                 padding: var(--space-2) var(--space-3);
             }
+
+            header h1 {
+                font-size: var(--text-xl);
+                margin-bottom: var(--space-1);
+            }
+
+            header img {
+                max-height: 50px;
+            }
+
+            .game-stats {
+                font-size: var(--text-sm);
+            }
+
+            button {
+                min-width: 120px;
+                padding: var(--space-3) var(--space-5);
+                font-size: var(--text-base);
+                min-height: 44px;
+            }
+
+            input[type="number"], input[type="text"] {
+                font-size: var(--text-base);
+                padding: var(--space-3) var(--space-4);
+                min-height: 44px;
+                margin-top: var(--space-4);
+            }
+
+            .clue-card {
+                min-height: 60px;
+                font-size: var(--text-base);
+                padding: var(--space-3);
+            }
+
+            .instructions {
+                font-size: var(--text-sm);
+                margin-top: var(--space-3);
+                line-height: 1.5;
+                padding: 0 var(--space-1);
+            }
+
+            .guesser-info {
+                font-size: var(--text-lg);
+                margin-bottom: var(--space-4);
+            }
+
+            .result-message {
+                font-size: var(--text-3xl);
+                margin-bottom: var(--space-5);
+            }
+
+            .final-score {
+                font-size: var(--text-4xl);
+                margin: var(--space-5) 0;
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-4);
+                margin-top: var(--space-5);
+            }
+
+            .button-row button {
+                width: 100%;
+                max-width: 240px;
+            }
+
+            .radio-option {
+                padding: var(--space-3);
+                font-size: var(--text-sm);
+            }
+
+            .word-source-section {
+                padding-top: var(--space-4);
+            }
+
+            .end-word-display, .end-guess-display {
+                font-size: var(--text-lg);
+            }
+
+            .player-inputs-container, .clue-display-container {
+                gap: var(--space-3);
+                margin-top: var(--space-4);
+                margin-bottom: var(--space-4);
+            }
         }
 
         /* Landscape mobile optimization */
@@ -844,6 +953,11 @@
 
             header h1 {
                 font-size: var(--text-2xl);
+                margin-bottom: var(--space-1);
+            }
+
+            header img {
+                max-height: 45px;
                 margin-bottom: var(--space-1);
             }
 
@@ -882,7 +996,7 @@
 
     <div class="game-container">
         <header>
-            <h1>Just One</h1>
+            <img src="header.png" alt="Just One" />
             <div class="game-stats">
                 <span id="score-display">Score: 0</span>
                 <span id="round-display">Round: 0 / 13</span>
