@@ -87,7 +87,3 @@ async def generate_words(request: ThemeRequest):
     except Exception as e:
         print(f"An error occurred while calling Gemini API: {e}")
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
-    
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8080, reload=True)
