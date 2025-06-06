@@ -52,13 +52,14 @@ async def generate_words(request: ThemeRequest):
     # We ask for more than 13 to have some buffer.
     # The prompt is very specific to get a clean, parsable output.
     prompt = f"""
-    Generate a list of 25 simple, one-word nouns related to the theme: '{theme}'.
-    The words should be suitable for a party game like 'Just One' but as fun and creative as possible.
-    Ensure the words are common enough for people to know and are easy to give clues for.
-    Do not include any explanation, preamble, or numbering.
-    Provide the output as a single line of text, with each word separated by a comma.
-    
-    Example for theme 'Ocean': Shark,Whale,Coral,Fish,Boat,Anchor,Wave,Island,Salt,Blue
+    Generate exactly 25 one-word nouns related to the theme: '{theme}'.
+    Include a balanced mix of:
+    - Common, familiar nouns that are easy to give clues for
+    - Funnier, quirkier, or more niche nouns that still make sense in casual conversation
+    Avoid verbs, adjectives, or multi-word phrases.
+    Output only the nouns, as a single comma-separated line, with no extra commentary or formatting.
+
+    Example (theme: Ocean): Shark,Snorkel,Kraken,Coral,Flipper,Barnacle,Fish,Submarine,Tidepool,Bubble
     """
 
     try:
