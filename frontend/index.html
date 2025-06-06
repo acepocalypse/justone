@@ -486,6 +486,174 @@
         /* Responsive improvements */
         @media (max-width: 768px) {
             :root {
+                --text-xs: 0.75rem;
+                --text-sm: 0.85rem;
+                --text-base: 0.95rem;
+                --text-lg: 1.05rem;
+                --text-xl: 1.15rem;
+                --text-2xl: 1.4rem;
+                --text-3xl: 1.7rem;
+                --text-4xl: 2rem;
+                --text-5xl: 2.8rem;
+                
+                /* Optimize spacing for mobile */
+                --space-1: 0.25rem;
+                --space-2: 0.5rem;
+                --space-3: 0.75rem;
+                --space-4: 1rem;
+                --space-5: 1.25rem;
+                --space-6: 1.5rem;
+                --space-8: 2rem;
+                --space-10: 2.5rem;
+                --space-12: 3rem;
+                --space-16: 4rem;
+            }
+
+            body {
+                padding: var(--space-2) var(--space-4);
+                overflow-y: auto;
+                align-items: stretch;
+            }
+
+            .game-container {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: var(--border-radius);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            main {
+                padding: var(--space-4) var(--space-6);
+                overflow-y: auto;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .screen {
+                justify-content: center;
+                min-height: 0;
+                flex: 1;
+                padding: var(--space-2) 0;
+            }
+            
+            .card {
+                padding: var(--space-6);
+                margin-bottom: var(--space-5);
+            }
+            
+            .secret-word-card {
+                font-size: var(--text-4xl);
+                padding: var(--space-8);
+                letter-spacing: 2px;
+            }
+            
+            .player-inputs-container, .clue-display-container {
+                grid-template-columns: 1fr;
+                gap: var(--space-4);
+                margin-top: var(--space-5);
+                margin-bottom: var(--space-5);
+            }
+
+            .clue-card {
+                min-height: 70px;
+                font-size: var(--text-lg);
+                padding: var(--space-4);
+            }
+
+            button {
+                min-width: 140px;
+                padding: var(--space-4) var(--space-6);
+                font-size: var(--text-base);
+                min-height: 48px;
+            }
+
+            input[type="number"], input[type="text"] {
+                font-size: var(--text-lg);
+                padding: var(--space-4) var(--space-5);
+                min-height: 48px;
+                margin-top: var(--space-5);
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-4);
+                margin-top: var(--space-5);
+            }
+
+            .button-row button {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            header {
+                padding: var(--space-4) var(--space-6);
+                flex-shrink: 0;
+            }
+
+            header h1 {
+                font-size: var(--text-3xl);
+                margin-bottom: var(--space-2);
+            }
+
+            .game-stats {
+                font-size: var(--text-base);
+            }
+
+            .instructions {
+                font-size: var(--text-base);
+                margin-top: var(--space-4);
+                max-width: none;
+                padding: 0 var(--space-2);
+            }
+
+            .guesser-info {
+                font-size: var(--text-xl);
+                margin-bottom: var(--space-5);
+            }
+
+            .result-message {
+                font-size: var(--text-4xl);
+                margin-bottom: var(--space-6);
+            }
+
+            .final-score {
+                font-size: var(--text-5xl);
+                margin: var(--space-6) 0;
+            }
+
+            .word-source-section {
+                padding-top: var(--space-5);
+            }
+
+            .word-source-options {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .radio-option {
+                padding: var(--space-4);
+            }
+
+            .theme-input-section {
+                margin-top: var(--space-4);
+            }
+
+            .player-input-card {
+                padding: var(--space-5);
+            }
+
+            .end-word-display, .end-guess-display {
+                font-size: var(--text-xl);
+                margin: var(--space-2) 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
                 --text-xs: 0.7rem;
                 --text-sm: 0.8rem;
                 --text-base: 0.9rem;
@@ -493,10 +661,10 @@
                 --text-xl: 1.1rem;
                 --text-2xl: 1.3rem;
                 --text-3xl: 1.6rem;
-                --text-4xl: 1.9rem;
-                --text-5xl: 2.5rem;
+                --text-4xl: 1.8rem;
+                --text-5xl: 2.4rem;
                 
-                /* Reduce spacing for mobile */
+                /* Balanced spacing for small screens */
                 --space-1: 0.2rem;
                 --space-2: 0.4rem;
                 --space-3: 0.6rem;
@@ -510,44 +678,46 @@
             }
 
             body {
-                padding: var(--space-1);
-                overflow-y: auto;
+                padding: var(--space-1) var(--space-3);
             }
 
             .game-container {
+                border-radius: var(--border-radius);
                 height: 100vh;
                 max-height: 100vh;
-                border-radius: var(--border-radius);
-                min-height: 100vh;
             }
-            
+
             main {
-                padding: var(--space-3);
-                overflow-y: auto;
+                padding: var(--space-3) var(--space-4);
             }
-            
+
+            .screen {
+                padding: var(--space-3) 0;
+                justify-content: center;
+            }
+
             .card {
                 padding: var(--space-4);
                 margin-bottom: var(--space-4);
             }
-            
+
             .secret-word-card {
-                font-size: var(--text-3xl);
                 padding: var(--space-6);
+                font-size: var(--text-3xl);
                 letter-spacing: 1px;
             }
-            
-            .player-inputs-container, .clue-display-container {
-                grid-template-columns: 1fr;
-                gap: var(--space-3);
-                margin-top: var(--space-4);
-                margin-bottom: var(--space-4);
+
+            header {
+                padding: var(--space-3) var(--space-4);
             }
 
-            .clue-card {
-                min-height: 60px;
-                font-size: var(--text-lg);
-                padding: var(--space-3);
+            header h1 {
+                font-size: var(--text-2xl);
+                margin-bottom: var(--space-1);
+            }
+
+            .game-stats {
+                font-size: var(--text-sm);
             }
 
             button {
@@ -558,123 +728,131 @@
             }
 
             input[type="number"], input[type="text"] {
-                font-size: var(--text-lg);
+                font-size: var(--text-base);
                 padding: var(--space-3) var(--space-4);
                 min-height: 44px;
                 margin-top: var(--space-4);
             }
 
-            .button-row {
-                flex-direction: column;
-                align-items: center;
-                gap: var(--space-3);
-                margin-top: var(--space-4);
-            }
-
-            .button-row button {
-                width: 100%;
-                max-width: 240px;
-            }
-
-            header {
-                padding: var(--space-3) var(--space-4);
-            }
-
-            header h1 {
-                font-size: var(--text-3xl);
-                margin-bottom: var(--space-1);
-            }
-
-            .game-stats {
+            .clue-card {
+                min-height: 60px;
                 font-size: var(--text-base);
+                padding: var(--space-3);
             }
 
             .instructions {
-                font-size: var(--text-base);
+                font-size: var(--text-sm);
                 margin-top: var(--space-3);
-                max-width: none;
+                line-height: 1.5;
+                padding: 0 var(--space-1);
             }
 
             .guesser-info {
-                font-size: var(--text-xl);
+                font-size: var(--text-lg);
                 margin-bottom: var(--space-4);
             }
 
             .result-message {
                 font-size: var(--text-3xl);
-                margin-bottom: var(--space-6);
+                margin-bottom: var(--space-5);
             }
 
             .final-score {
                 font-size: var(--text-4xl);
-                margin: var(--space-6) 0;
+                margin: var(--space-5) 0;
+            }
+
+            .button-row {
+                gap: var(--space-3);
+                margin-top: var(--space-4);
+            }
+
+            .button-row button {
+                max-width: 240px;
+            }
+
+            .radio-option {
+                padding: var(--space-3);
+                font-size: var(--text-sm);
             }
 
             .word-source-section {
                 padding-top: var(--space-4);
             }
 
-            .word-source-options {
-                flex-direction: column;
-                gap: var(--space-3);
-            }
-
-            .radio-option {
-                padding: var(--space-3);
-            }
-
-            .theme-input-section {
-                margin-top: var(--space-3);
-            }
-
-            .player-input-card {
-                padding: var(--space-4);
-            }
-
             .end-word-display, .end-guess-display {
                 font-size: var(--text-lg);
-                margin: var(--space-1) 0;
+            }
+
+            .player-inputs-container, .clue-display-container {
+                gap: var(--space-3);
+                margin-top: var(--space-4);
+                margin-bottom: var(--space-4);
             }
         }
 
-        @media (max-width: 480px) {
+        /* Ultra-small screens optimization */
+        @media (max-width: 360px) and (max-height: 640px) {
             :root {
                 --text-xs: 0.65rem;
-                --text-sm: 0.7rem;
-                --text-base: 0.8rem;
-                --text-lg: 0.9rem;
-                --text-xl: 1rem;
-                --text-2xl: 1.1rem;
-                --text-3xl: 1.3rem;
-                --text-4xl: 1.5rem;
-                --text-5xl: 2rem;
-                
-                /* Further reduce spacing for small screens */
-                --space-1: 0.15rem;
-                --space-2: 0.3rem;
-                --space-3: 0.5rem;
-                --space-4: 0.7rem;
-                --space-5: 0.9rem;
-                --space-6: 1rem;
-                --space-8: 1.4rem;
-                --space-10: 1.8rem;
-                --space-12: 2rem;
-                --space-16: 2.8rem;
+                --text-sm: 0.75rem;
+                --text-base: 0.85rem;
+                --text-lg: 0.95rem;
+                --text-xl: 1.05rem;
+                --text-2xl: 1.2rem;
+                --text-3xl: 1.4rem;
+                --text-4xl: 1.6rem;
+                --text-5xl: 2.2rem;
             }
 
             body {
-                padding: 0;
-            }
-
-            .game-container {
-                border-radius: 0;
-                border: none;
-                height: 100vh;
-                max-height: 100vh;
+                padding: 0 var(--space-2);
             }
 
             main {
-                padding: var(--space-2);
+                padding: var(--space-2) var(--space-3);
+            }
+
+            .secret-word-card {
+                font-size: var(--text-2xl);
+                padding: var(--space-4);
+            }
+
+            .card h2 {
+                font-size: var(--text-lg);
+            }
+
+            .card p {
+                font-size: var(--text-base);
+            }
+
+            header {
+                padding: var(--space-2) var(--space-3);
+            }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+            .game-container {
+                height: 100vh;
+            }
+
+            header {
+                padding: var(--space-2) var(--space-4);
+            }
+
+            header h1 {
+                font-size: var(--text-2xl);
+                margin-bottom: var(--space-1);
+            }
+
+            main {
+                padding: var(--space-2) var(--space-4);
+            }
+
+            .screen {
+                padding: var(--space-1) 0;
+                justify-content: flex-start;
             }
 
             .card {
@@ -687,113 +865,14 @@
                 font-size: var(--text-2xl);
             }
 
-            header {
-                padding: var(--space-2) var(--space-3);
-            }
-
-            header h1 {
-                font-size: var(--text-2xl);
-                margin-bottom: var(--space-1);
-            }
-
-            .game-stats {
-                font-size: var(--text-sm);
-            }
-
-            button {
-                min-width: 100px;
-                padding: var(--space-2) var(--space-4);
-                font-size: var(--text-sm);
-                min-height: 40px;
-            }
-
-            input[type="number"], input[type="text"] {
-                font-size: var(--text-base);
-                padding: var(--space-2) var(--space-3);
-                min-height: 40px;
-                margin-top: var(--space-3);
-            }
-
-            .clue-card {
-                min-height: 50px;
-                font-size: var(--text-base);
-                padding: var(--space-2);
-            }
-
             .instructions {
-                font-size: var(--text-sm);
                 margin-top: var(--space-2);
-                line-height: 1.4;
-            }
-
-            .guesser-info {
-                font-size: var(--text-lg);
-                margin-bottom: var(--space-3);
-            }
-
-            .result-message {
-                font-size: var(--text-2xl);
-                margin-bottom: var(--space-4);
-            }
-
-            .final-score {
-                font-size: var(--text-3xl);
-                margin: var(--space-4) 0;
+                font-size: var(--text-sm);
             }
 
             .button-row {
-                gap: var(--space-2);
                 margin-top: var(--space-3);
-            }
-
-            .button-row button {
-                max-width: 200px;
-            }
-
-            .radio-option {
-                padding: var(--space-2) var(--space-3);
-                font-size: var(--text-sm);
-            }
-
-            .word-source-section {
-                padding-top: var(--space-3);
-            }
-
-            .end-word-display, .end-guess-display {
-                font-size: var(--text-base);
-            }
-
-            .screen {
-                justify-content: flex-start;
-                padding-top: var(--space-2);
-            }
-        }
-
-        /* Ultra-small screens optimization */
-        @media (max-width: 360px) and (max-height: 640px) {
-            :root {
-                --text-xs: 0.6rem;
-                --text-sm: 0.65rem;
-                --text-base: 0.75rem;
-                --text-lg: 0.8rem;
-                --text-xl: 0.9rem;
-                --text-2xl: 1rem;
-                --text-3xl: 1.2rem;
-                --text-4xl: 1.4rem;
-                --text-5xl: 1.8rem;
-            }
-
-            .secret-word-card {
-                font-size: var(--text-xl);
-                padding: var(--space-3);
-            }
-
-            .card h2 {
-                font-size: var(--text-lg);
-            }
-
-            .card p {
-                font-size: var(--text-base);
+                gap: var(--space-2);
             }
         }
     </style>
