@@ -89,10 +89,11 @@
             background-attachment: fixed;
             color: var(--text-primary);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: var(--space-4);
-            overflow: hidden;
+            min-height: 100vh;
             position: relative;
             outline: 2px solid rgba(255, 107, 53, 0.1);
         }
@@ -524,6 +525,7 @@
                 padding: var(--space-2) var(--space-4);
                 overflow-y: auto;
                 align-items: stretch;
+                min-height: 100vh;
             }
 
             .game-container {
@@ -695,6 +697,7 @@
 
             body {
                 padding: var(--space-1) var(--space-3);
+                min-height: 100vh;
             }
 
             .game-container {
@@ -990,6 +993,40 @@
                 gap: var(--space-2);
             }
         }
+
+        /* Footer styles */
+        .setup-footer {
+            text-align: center;
+            font-size: var(--text-xs);
+            color: var(--text-light);
+            margin-top: var(--space-6);
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .page-footer {
+            text-align: center;
+            font-size: var(--text-xs);
+            color: var(--text-light);
+            margin-top: var(--space-4);
+            font-weight: 500;
+            opacity: 0.8;
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .setup-footer {
+                margin-top: var(--space-4);
+                font-size: 0.65rem;
+            }
+            
+            .page-footer {
+                margin-top: var(--space-2);
+                font-size: 0.65rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1113,6 +1150,10 @@
 
         </main>
     </div>
+
+    <footer class="page-footer">
+        Made by Ace Setiawan
+    </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
