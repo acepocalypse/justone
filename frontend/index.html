@@ -911,12 +911,7 @@
 
             .end-word-display, .end-guess-display {
                 font-size: var(--text-lg);
-            }
-
-            .player-inputs-container, .clue-display-container {
-                gap: var(--space-3);
-                margin-top: var(--space-4);
-                margin-bottom: var(--space-4);
+                margin: var(--space-2) 0;
             }
         }
 
@@ -1269,6 +1264,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return distance <= maxAllowedDistance;
     }
 
+    // Function to check if clue is a single word
+    function isSingleWord(clue) {
+        // Trim the clue and check for spaces, tabs, or other whitespace
+        const trimmedClue = clue.trim();
+        
+        // Check if empty
+        if (trimmedClue === '') {
+            return false;
+        }
+        
+        // Check for any whitespace characters (spaces, tabs, newlines, etc.)
+        if (/\s/.test(trimmedClue)) {
+            return false;
+        }
+        
+        // Check for common separators that might indicate multiple words
+        if (/[-_\/\\]/.test(trimmedClue)) {
+            return false;
+        }
+        
+        return true;
+    }
+
     // Function to check if clue is too similar to the secret word
     function isClueValid(clue, secretWord) {
         // Normalize both strings
@@ -1452,6 +1470,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPlayerIndex = state.clueGivers[state.currentClueGiverIndex];
         
         if (clue !== "") {
+            // Check if it's a single word
+            if (!isSingleWord(clue)) {
+                alert('Clues must be exactly one word! No spaces, hyphens, or other separators allowed.');
+                ui.individualClueInput.focus();
+                return;
+            }
+            
             // Validate clue before accepting it
             if (!isClueValid(clue, state.currentWord)) {
                 alert(`"${clue}" is too similar to the secret word! Please choose a different clue.`);
