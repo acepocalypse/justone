@@ -323,6 +323,7 @@
             box-shadow: var(--shadow-sm);
             min-height: 56px;
             color: var(--text-primary);
+            autocomplete: "off";
         }
         
         input[type="number"]:focus, input[type="text"]:focus {
@@ -378,6 +379,7 @@
             padding: var(--space-3) var(--space-4);
             min-height: 44px;
             font-weight: 500;
+            autocomplete: "off";
         }
         
         .clue-card {
@@ -588,6 +590,7 @@
                 padding: var(--space-4) var(--space-5);
                 min-height: 48px;
                 margin-top: var(--space-5);
+                autocomplete: "off";
             }
 
             .button-row {
@@ -744,26 +747,6 @@
                 font-size: var(--text-sm);
             }
 
-            button {
-                min-width: 120px;
-                padding: var(--space-3) var(--space-5);
-                font-size: var(--text-base);
-                min-height: 44px;
-            }
-
-            input[type="number"], input[type="text"] {
-                font-size: var(--text-base);
-                padding: var(--space-3) var(--space-4);
-                min-height: 44px;
-                margin-top: var(--space-4);
-            }
-
-            .clue-card {
-                min-height: 60px;
-                font-size: var(--text-base);
-                padding: var(--space-3);
-            }
-
             .instructions {
                 font-size: var(--text-sm);
                 margin-top: var(--space-3);
@@ -786,16 +769,13 @@
                 margin: var(--space-5) 0;
             }
 
-            .button-row {
-                flex-direction: column;
-                align-items: center;
-                gap: var(--space-4);
-                margin-top: var(--space-5);
+            .word-source-section {
+                padding-top: var(--space-4);
             }
 
-            .button-row button {
-                width: 100%;
-                max-width: 240px;
+            .word-source-options {
+                flex-direction: column;
+                gap: var(--space-4);
             }
 
             .radio-option {
@@ -803,18 +783,17 @@
                 font-size: var(--text-sm);
             }
 
-            .word-source-section {
-                padding-top: var(--space-4);
+            .theme-input-section {
+                margin-top: var(--space-4);
+            }
+
+            .player-input-card {
+                padding: var(--space-5);
             }
 
             .end-word-display, .end-guess-display {
                 font-size: var(--text-lg);
-            }
-
-            .player-inputs-container, .clue-display-container {
-                gap: var(--space-3);
-                margin-top: var(--space-4);
-                margin-bottom: var(--space-4);
+                margin: var(--space-2) 0;
             }
         }
 
@@ -882,6 +861,7 @@
                 padding: var(--space-3) var(--space-4);
                 min-height: 44px;
                 margin-top: var(--space-4);
+                autocomplete: "off";
             }
 
             .clue-card {
@@ -1046,7 +1026,7 @@
                 <div class="card">
                     <h2>Welcome to Clue Stitch!</h2>
                     <p>A cooperative party game. Work together to discover as many mystery words as possible. To begin, enter the number of players (3-7).</p>
-                    <input type="number" id="player-count" min="3" max="7" placeholder="Player count?">
+                    <input type="number" id="player-count" min="3" max="7" placeholder="Player count?" autocomplete="off">
                     
                     <div class="word-source-section" style="margin-top: var(--space-6);">
                         <h3 style="margin-bottom: var(--space-4); color: var(--text-primary); font-weight: 700;">Choose Word Source:</h3>
@@ -1061,7 +1041,7 @@
                             </label>
                         </div>
                         <div id="theme-input-section" class="theme-input-section" style="display: none;">
-                            <input type="text" id="theme-input" placeholder="Enter a theme (e.g., Animals, Movies, Food)">
+                            <input type="text" id="theme-input" placeholder="Enter a theme (e.g., Animals, Movies, Food)" autocomplete="off">
                             <p class="instructions" style="margin-top: var(--space-2); font-size: var(--text-sm);">
                                 AI will generate 25 words based on your theme
                             </p>
@@ -1095,7 +1075,7 @@
                 <p class="instructions">The secret word is:</p>
                 <div id="individual-secret-word" class="card secret-word-card"></div>
                 <p class="instructions">Please enter your one-word clue below.</p>
-                <input type="text" id="individual-clue-input" placeholder="Your clue here">
+                <input type="text" id="individual-clue-input" placeholder="Your clue here" autocomplete="off">
                 <div class="button-row">
                     <button id="submit-individual-clue-btn">Submit Clue</button>
                     <button id="skip-individual-clue-btn" class="secondary">Skip Clue</button>
@@ -1115,7 +1095,7 @@
                 <h2 id="guessing-player-name" class="guesser-info">It's your turn to guess!</h2>
                 <p class="instructions">Based on these clues, you get just one guess to find the secret word.</p>
                 <div id="valid-clues-container" class="clue-display-container"></div>
-                <input type="text" id="player-guess-input" placeholder="Type your guess here">
+                <input type="text" id="player-guess-input" placeholder="Type your guess here" autocomplete="off">
                 <div class="button-row">
                     <button id="submit-guess-btn">Submit Guess</button>
                     <button id="pass-btn" class="secondary">Pass</button>
