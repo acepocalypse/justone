@@ -913,8 +913,12 @@
                 font-size: var(--text-sm);
             }
 
-            .word-source-section {
-                padding-top: var(--space-4);
+            .theme-input-section {
+                margin-top: var(--space-4);
+            }
+
+            .player-input-card {
+                padding: var(--space-5);
             }
 
             .end-word-display, .end-guess-display {
@@ -1012,6 +1016,158 @@
                 font-size: 0.65rem;
             }
         }
+
+        /* Timer Styles */
+        .timer-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: var(--space-6) 0;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .timer-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 8px solid var(--primary-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .timer-circle.warning {
+            border-color: var(--accent-yellow);
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .timer-circle.critical {
+            border-color: var(--accent-pink);
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+            font-size: var(--text-4xl);
+            font-weight: 800;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .timer-circle.warning #timer-text,
+        .timer-circle.warning #timer-text-clue,
+        .timer-circle.warning #timer-text-individual,
+        .timer-circle.warning #timer-text-guess {
+            color: var(--accent-yellow);
+        }
+
+        .timer-circle.critical #timer-text,
+        .timer-circle.critical #timer-text-clue,
+        .timer-circle.critical #timer-text-individual,
+        .timer-circle.critical #timer-text-guess {
+            color: var(--accent-pink);
+        }
+
+        .timer-label {
+            margin-top: var(--space-3);
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-4) var(--space-6);
+            border: 2px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .radio-option:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            accent-color: var(--primary-orange);
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+
+        /* Timer settings responsive */
+        @media (max-width: 768px) {
+            .timer-display {
+                margin: var(--space-4) 0;
+            }
+
+            .timer-circle {
+                width: 100px;
+                height: 100px;
+                border-width: 6px;
+            }
+
+            #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+                font-size: var(--text-3xl);
+            }
+
+            .timer-options {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+
+            .radio-option {
+                min-width: auto;
+                width: 100%;
+                max-width: 280px;
+                padding: var(--space-3) var(--space-4);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-circle {
+                width: 80px;
+                height: 80px;
+                border-width: 4px;
+            }
+
+            #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+                font-size: var(--text-2xl);
+            }
+
+            .timer-label {
+                font-size: var(--text-sm);
+                margin-top: var(--space-2);
+            }
+        }
+
+        /* ...existing styles... */
     </style>
 </head>
 <body>
@@ -1052,6 +1208,23 @@
                             </p>
                         </div>
                     </div>
+                    
+                    <div class="timer-settings-section" style="margin-top: var(--space-6);">
+                        <h3 style="margin-bottom: var(--space-4); color: var(--text-primary); font-weight: 700;">Timer Settings:</h3>
+                        <div class="timer-options" style="display: flex; gap: var(--space-4); justify-content: center; margin-bottom: var(--space-4);">
+                            <label class="radio-option">
+                                <input type="radio" name="timer-setting" value="none" checked>
+                                <span>No Timer</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="timer-setting" value="standard">
+                                <span>Use Timer</span>
+                            </label>
+                        </div>
+                        <div id="timer-details" style="display: none; font-size: var(--text-sm); color: var(--text-secondary); font-style: italic; text-align: center;">
+                            Clue givers: 30 seconds • Guessers: 90 seconds
+                        </div>
+                    </div>
                 </div>
                 <button id="start-game-btn">Start Game</button>
                 <div id="loading-message" style="display: none; margin-top: var(--space-4); color: var(--text-secondary); font-style: italic;">
@@ -1063,6 +1236,12 @@
             <div id="round-start-screen" class="screen">
                 <h2 id="round-start-title" class="guesser-info">Round 1 - Player 1 is the Guesser!</h2>
                 <p class="instructions" style="margin-bottom: var(--space-8);">Guesser, please look away from the screen now. Clue Givers, press the button when you're ready to see the secret word.</p>
+                <div id="timer-display" class="timer-display" style="display: none;">
+                    <div class="timer-circle">
+                        <span id="timer-text">30</span>
+                    </div>
+                    <p class="timer-label">seconds remaining</p>
+                </div>
                 <button id="show-word-btn">Show Secret Word</button>
             </div>
 
@@ -1071,6 +1250,12 @@
                 <p class="instructions">The secret word is:</p>
                 <div id="secret-word-display" class="card secret-word-card"></div>
                 <p class="instructions" style="margin-bottom: var(--space-8);">Each Clue Giver will now enter their clue individually. Pass the device to each player when prompted.</p>
+                <div id="timer-display-clue" class="timer-display" style="display: none;">
+                    <div class="timer-circle">
+                        <span id="timer-text-clue">30</span>
+                    </div>
+                    <p class="timer-label">seconds remaining</p>
+                </div>
                 <button id="start-individual-clues-btn">Start Individual Clue Entry</button>
             </div>
 
@@ -1080,6 +1265,12 @@
                 <p class="instructions">The secret word is:</p>
                 <div id="individual-secret-word" class="card secret-word-card"></div>
                 <p class="instructions">Please enter your one-word clue below.</p>
+                <div id="timer-display-individual" class="timer-display" style="display: none;">
+                    <div class="timer-circle">
+                        <span id="timer-text-individual">30</span>
+                    </div>
+                    <p class="timer-label">seconds remaining</p>
+                </div>
                 <input type="text" id="individual-clue-input" placeholder="Your clue here" autocomplete="off">
                 <div class="button-row">
                     <button id="submit-individual-clue-btn">Submit Clue</button>
@@ -1099,6 +1290,12 @@
             <div id="guessing-screen" class="screen">
                 <h2 id="guessing-player-name" class="guesser-info">It's your turn to guess!</h2>
                 <p class="instructions">Based on these clues, you get just one guess to find the secret word.</p>
+                <div id="timer-display-guess" class="timer-display" style="display: none;">
+                    <div class="timer-circle">
+                        <span id="timer-text-guess">90</span>
+                    </div>
+                    <p class="timer-label">seconds remaining</p>
+                </div>
                 <div id="valid-clues-container" class="clue-display-container"></div>
                 <input type="text" id="player-guess-input" placeholder="Type your guess here" autocomplete="off">
                 <div class="button-row">
@@ -1139,6 +1336,162 @@
     <footer class="page-footer">
         Made by Ace Setiawan
     </footer>
+
+<style>
+        /* ...existing styles... */
+        
+        /* Timer Styles */
+        .timer-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: var(--space-6) 0;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .timer-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 8px solid var(--primary-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .timer-circle.warning {
+            border-color: var(--accent-yellow);
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .timer-circle.critical {
+            border-color: var(--accent-pink);
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+            font-size: var(--text-4xl);
+            font-weight: 800;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .timer-circle.warning #timer-text,
+        .timer-circle.warning #timer-text-clue,
+        .timer-circle.warning #timer-text-individual,
+        .timer-circle.warning #timer-text-guess {
+            color: var(--accent-yellow);
+        }
+
+        .timer-circle.critical #timer-text,
+        .timer-circle.critical #timer-text-clue,
+        .timer-circle.critical #timer-text-individual,
+        .timer-circle.critical #timer-text-guess {
+            color: var(--accent-pink);
+        }
+
+        .timer-label {
+            margin-top: var(--space-3);
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-4) var(--space-6);
+            border: 2px solid var(--bg-secondary);
+            border-radius: var(--border-radius);
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .radio-option:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            accent-color: var(--primary-orange);
+        }
+
+        .radio-option input[type="radio"]:checked + span {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+
+        /* Timer settings responsive */
+        @media (max-width: 768px) {
+            .timer-display {
+                margin: var(--space-4) 0;
+            }
+
+            .timer-circle {
+                width: 100px;
+                height: 100px;
+                border-width: 6px;
+            }
+
+            #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+                font-size: var(--text-3xl);
+            }
+
+            .timer-options {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+
+            .radio-option {
+                min-width: auto;
+                width: 100%;
+                max-width: 280px;
+                padding: var(--space-3) var(--space-4);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-circle {
+                width: 80px;
+                height: 80px;
+                border-width: 4px;
+            }
+
+            #timer-text, #timer-text-clue, #timer-text-individual, #timer-text-guess {
+                font-size: var(--text-2xl);
+            }
+
+            .timer-label {
+                font-size: var(--text-sm);
+                margin-top: var(--space-2);
+            }
+        }
+
+        /* ...existing styles... */
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -1214,7 +1567,133 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add override event listener
     document.getElementById('override-btn').addEventListener('click', overrideGuess);
 
-    // --- GAME LOGIC ---
+    // --- TIMER FUNCTIONALITY ---
+    let gameTimer = {
+        active: false,
+        timeLeft: 0,
+        interval: null,
+        currentElement: null,
+        currentCircle: null,
+        onExpire: null,
+        warningThreshold: 10,
+        criticalThreshold: 5
+    };
+
+    // Add timer event listeners
+    document.querySelectorAll('input[name="timer-setting"]').forEach(radio => {
+        radio.addEventListener('change', toggleTimerDetails);
+    });
+
+    function toggleTimerDetails() {
+        const timerDetails = document.getElementById('timer-details');
+        const selectedTimer = document.querySelector('input[name="timer-setting"]:checked').value;
+        
+        if (selectedTimer === 'standard') {
+            timerDetails.style.display = 'block';
+        } else {
+            timerDetails.style.display = 'none';
+        }
+    }
+
+    function startTimer(duration, elementId, onExpireCallback) {
+        stopTimer(); // Clear any existing timer
+        
+        const timerEnabled = document.querySelector('input[name="timer-setting"]:checked').value === 'standard';
+        if (!timerEnabled) return;
+
+        gameTimer.active = true;
+        gameTimer.timeLeft = duration;
+        gameTimer.currentElement = document.getElementById(elementId);
+        gameTimer.currentCircle = gameTimer.currentElement.querySelector('.timer-circle');
+        gameTimer.onExpire = onExpireCallback;
+
+        // Show timer display
+        gameTimer.currentElement.style.display = 'flex';
+        updateTimerDisplay();
+
+        gameTimer.interval = setInterval(() => {
+            gameTimer.timeLeft--;
+            updateTimerDisplay();
+
+            if (gameTimer.timeLeft <= 0) {
+                stopTimer();
+                if (gameTimer.onExpire) {
+                    gameTimer.onExpire();
+                }
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        if (gameTimer.interval) {
+            clearInterval(gameTimer.interval);
+            gameTimer.interval = null;
+        }
+        
+        gameTimer.active = false;
+        
+        // Hide all timer displays
+        document.querySelectorAll('.timer-display').forEach(timer => {
+            timer.style.display = 'none';
+        });
+        
+        // Reset timer circle classes
+        document.querySelectorAll('.timer-circle').forEach(circle => {
+            circle.classList.remove('warning', 'critical');
+        });
+    }
+
+    function updateTimerDisplay() {
+        if (!gameTimer.currentElement || !gameTimer.currentCircle) return;
+
+        const timerTextElement = gameTimer.currentElement.querySelector('[id^="timer-text"]');
+        if (timerTextElement) {
+            timerTextElement.textContent = gameTimer.timeLeft;
+        }
+
+        // Update visual state based on time remaining
+        gameTimer.currentCircle.classList.remove('warning', 'critical');
+        
+        if (gameTimer.timeLeft <= gameTimer.criticalThreshold) {
+            gameTimer.currentCircle.classList.add('critical');
+            // Play sound effect for critical time (if audio is available)
+            playTimerSound('critical');
+        } else if (gameTimer.timeLeft <= gameTimer.warningThreshold) {
+            gameTimer.currentCircle.classList.add('warning');
+            // Play sound effect for warning time (if audio is available)
+            if (gameTimer.timeLeft === gameTimer.warningThreshold) {
+                playTimerSound('warning');
+            }
+        }
+    }
+
+    function playTimerSound(type) {
+        // Simple audio feedback using Web Audio API
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'critical') {
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } else if (type === 'warning') {
+                oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.15);
+            }
+        } catch (error) {
+            // Audio not supported, fail silently
+        }
+    }
+
+    // --- GAME LOGIC WITH TIMER INTEGRATION ---
 
     function switchScreen(screenName) {
         Object.values(screens).forEach(screen => screen.classList.remove('active'));
@@ -1371,6 +1850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const selectedSource = document.querySelector('input[name="word-source"]:checked').value;
+        const timerEnabled = document.querySelector('input[name="timer-setting"]:checked').value === 'standard';
         let wordsToUse = [...wordList];
 
         if (selectedSource === 'theme') {
@@ -1412,7 +1892,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentWord: null,
             clues: [],
             currentClueGiverIndex: 0,
-            clueGivers: []
+            clueGivers: [],
+            timerEnabled: timerEnabled
         };
     }
 
@@ -1477,9 +1958,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.individualClueInput.focus();
         
         switchScreen('individualClue');
+        
+        // Start clue timer (30 seconds)
+        if (state.timerEnabled) {
+            startTimer(30, 'timer-display-individual', () => {
+                // Timer expired - automatically skip this clue
+                skipIndividualClue();
+            });
+        }
     }
 
     function submitIndividualClue() {
+        stopTimer(); // Stop the timer when clue is submitted
+        
         const clue = ui.individualClueInput.value.trim();
         const currentPlayerIndex = state.clueGivers[state.currentClueGiverIndex];
         
@@ -1488,6 +1979,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isSingleWord(clue)) {
                 alert('Clues must be exactly one word! No spaces, hyphens, or other separators allowed.');
                 ui.individualClueInput.focus();
+                // Restart timer if enabled
+                if (state.timerEnabled) {
+                    startTimer(30, 'timer-display-individual', () => {
+                        skipIndividualClue();
+                    });
+                }
                 return;
             }
             
@@ -1495,6 +1992,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isClueValid(clue, state.currentWord)) {
                 alert(`"${clue}" is too similar to the secret word! Please choose a different clue.`);
                 ui.individualClueInput.focus();
+                // Restart timer if enabled
+                if (state.timerEnabled) {
+                    startTimer(30, 'timer-display-individual', () => {
+                        skipIndividualClue();
+                    });
+                }
                 return;
             }
             
@@ -1510,6 +2013,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function skipIndividualClue() {
+        stopTimer(); // Stop the timer when skipping
         state.currentClueGiverIndex++;
         showNextClueGiver();
     }
@@ -1587,9 +2091,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         switchScreen('guessing');
+        
+        // Start guess timer (90 seconds)
+        if (state.timerEnabled) {
+            startTimer(90, 'timer-display-guess', () => {
+                // Timer expired - automatically pass
+                processGuess(true, false, true); // true for isPass, false for wasForcedPass, true for timerExpired
+            });
+        }
     }
 
-    function processGuess(isPass, wasForcedPass = false) {
+    function processGuess(isPass, wasForcedPass = false, timerExpired = false) {
+        stopTimer(); // Stop the timer when processing guess
+        
         const guess = ui.playerGuessInput.value.trim();
         let correct = false;
         let wasOverridden = false;
@@ -1597,7 +2111,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.endSecretWord.textContent = state.currentWord;
         
         if (isPass) {
-            ui.resultMessage.textContent = wasForcedPass ? "No Valid Clues!" : "You chose to pass.";
+            if (timerExpired) {
+                ui.resultMessage.textContent = "Time's Up!";
+            } else if (wasForcedPass) {
+                ui.resultMessage.textContent = "No Valid Clues!";
+            } else {
+                ui.resultMessage.textContent = "You chose to pass.";
+            }
             ui.resultMessage.className = 'result-message pass';
             ui.endPlayerGuess.textContent = '---';
             document.getElementById('override-btn').style.display = 'none';
@@ -1627,6 +2147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             guess: guess,
             isPass: isPass,
             wasForcedPass: wasForcedPass,
+            timerExpired: timerExpired,
             wasCorrect: correct,
             wasOverridden: false
         };
